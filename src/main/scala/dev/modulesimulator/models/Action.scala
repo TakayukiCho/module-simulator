@@ -4,26 +4,32 @@ import scala.util.Random
 
 sealed trait Action {
   val typeCost: Double
+  def cost: Double
 }
 
-case object Attack extends Action {
+case class Attack(force: Double) extends Action {
   override val typeCost: Double = 1
+  override lazy val cost = typeCost * force
 }
 
-case object Defend extends Action {
+case class Defend(force: Double) extends Action {
   override val typeCost: Double = 0.5
+  override lazy val cost = typeCost * force
 }
 
-case object Cure extends Action {
+case class Cure(force: Double) extends Action {
   override val typeCost: Double = 0.9
+  override lazy val cost = typeCost * force
 }
 
-case object AllRangeAttack extends Action {
+case class AllRangeAttack(force: Double) extends Action {
   override val typeCost: Double = 3
+  override lazy val cost = typeCost * force
 }
 
 case object Noop extends Action {
   override val typeCost: Double = -3
+  override val cost = typeCost
 }
 
 object Action {
