@@ -8,13 +8,13 @@ object Bootstrap {
   def main(args: Array[String]): Unit = {
     extractMainArgs(args).fold({ errMsg =>
       println(errMsg)
-    }, { (moduleType, count) =>
-
+    }, { case (moduleType, count) =>
+      println("huga")
     })
   }
 
 
-  private def extractMainArgs(args: Array[String]): Either[String, (ModuleType, Int)] = {
+  private def extractMainArgs(args: Array[String]): Either[String, (ModuleType, Int)] = args match {
     case Array(moduleType: String, quantity: String, _) => validateMainArgs(moduleType, quantity)
     case _ => Left("Please specify correct number")
   }
@@ -30,7 +30,7 @@ object Bootstrap {
   private def convertQuantityToInt(strQuantity: String) =
     Try(strQuantity.toInt).toEither.left.map(_ => "Please specify the number of module to be created in the second arg by Integer")
 
-  private def getModuleType(moduleType: String): Either[String, ModuleType] = {
+  private def getModuleType(moduleType: String): Either[String, ModuleType] = moduleType match {
     case MixModule.name => Right(MixModule)
     case AttackModule.name => Right(AttackModule)
     case CureModule.name => Right(CureModule)
